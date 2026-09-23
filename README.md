@@ -5,7 +5,7 @@
 > Built at a real estate and media group in Mexico.
 > **Anonymized portfolio version — all data is synthetic.**
 
-![Python](https://img.shields.io/badge/Python-3.11+-3776AB) ![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B) ![AWS Cognito](https://img.shields.io/badge/AWS-Cognito-FF9900) ![License](https://img.shields.io/badge/license-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB) ![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B) ![AWS Cognito](https://img.shields.io/badge/AWS-Cognito-FF9900)
 
 **▶ Live demo:** *(pending deploy — the link goes here)*
 
@@ -202,7 +202,3 @@ This is a real production system, rewritten for public release:
   law and is described as it is.
 
 The architecture, the collections logic and the engineering decisions are the real ones.
-
-## License
-
-MIT — see [LICENSE](LICENSE).
