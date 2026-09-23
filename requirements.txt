@@ -1,0 +1,13 @@
+# --- Demo (this is what Streamlit Community Cloud installs) ---
+streamlit>=1.40
+
+# --- Production app, on top of the above ---
+# pandas
+# requests
+# snowflake-connector-python[pandas]
+# cryptography
+# boto3>=1.42.34                  # AWS Cognito
+# python-jose[cryptography]>=3.3.0
+# PyJWT>=2.8.0
+# streamlit-cookies-manager>=0.2.0
+# python-dotenv>=1.0.1

@@ -1,0 +1,12 @@
+streamlit
+pandas
+requests
+snowflake-connector-python
+cryptography
+
+# AWS Cognito Authentication (utils/auth)
+boto3>=1.42.34
+python-jose[cryptography]>=3.3.0
+PyJWT>=2.8.0
+streamlit-cookies-manager>=0.2.0
+python-dotenv>=1.0.1
