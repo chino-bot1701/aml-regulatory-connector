@@ -1,0 +1,67 @@
+version: 0.2
+  #env:
+  #variables:
+  # key: "value"
+  # key: "value"
+  #parameter-store:
+  # key: "value"
+  # key: "value"
+  #secrets-manager:
+  # key: secret-id:json-key:version-stage:version-id
+  # key: secret-id:json-key:version-stage:version-id
+  #exported-variables:
+  # - variable
+  # - variable
+#git-credential-helper: yes
+phases:
+  install:
+    # runtime-versions:
+    #   docker: 19
+    commands:
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+    #  - echo Instaling packages...
+    #  - apt update && apt install -y jq bc
+  pre_build:
+    commands:
+      - dir=$(pwd)
+      - "aws --version || (echo 'ERROR: AWS CLI not installed' && exit 1)"
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+      - newTag=1.$(date +%Y%m%d-%H%M%S)
+      - echo The New tag will be $newTag
+      - echo Downloading Snowflake private key from S3...
+      - aws s3 cp s3://${KEY_BUCKET}/LLAVES_SF_ALMENA_DESARROLLOS/SVC_ANALYTICS_key_pk8.pem SVC_ANALYTICS_key_pk8.pem
+      - echo PEM downloaded as SVC_ANALYTICS_key_pk8.pem
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - cd $dir
+      - docker build -t ${ECR_REGISTRY}/app/aml-connector/dashboard:$newTag .
+      # update the following line with the URI of your own ECR repository (view the Push Commands in the console)
+      - docker tag ${ECR_REGISTRY}/app/aml-connector/dashboard:$newTag ${ECR_REGISTRY}/app/aml-connector/dashboard:latest
+      - docker images
+      - docker push ${ECR_REGISTRY}/app/aml-connector/dashboard:$newTag
+      - docker push ${ECR_REGISTRY}/app/aml-connector/dashboard:latest
+      - echo Build Finish on `date`
+    #post_build:
+      #commands:
+    #reports:
+    #report-name-or-arn:
+    #files:
+    # - location
+    # - location
+    #base-directory: location
+    #discard-paths: yes
+    #file-format: JunitXml | CucumberJson
+    #artifacts:
+    #files:
+    # - location
+    # - location
+    #name: $(date +%Y-%m-%d)
+    #discard-paths: yes
+    #base-directory: location
+    #cache:
+    #paths:
+    # - paths

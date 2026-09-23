@@ -69,7 +69,7 @@ Thumbs.db
 # ---- Salidas de ejecución ----
 logs/
 *.log
-out/
-dist/
-build/
-out/
+/out/
+/dist/
+/build/
+/out/
